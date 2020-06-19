@@ -13,6 +13,14 @@ var router=new VueRouter({
 				path: "/login",
 				component: login
 			},
+			{
+					path: "/update",
+					component:  ()=>import("../components/update.vue") 
+				},
+			{
+					path: "/main",
+					component: ()=>import("../components/main.vue")
+				},
 		{
 			path:"/register",
 			 component:()=>import("../components/login/register.vue")
