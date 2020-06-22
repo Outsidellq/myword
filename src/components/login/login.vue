@@ -31,7 +31,6 @@
 							<input type="password" class="form-control" placeholder="密码" v-model="pwd">
 						</div>
 					</div>
-
 					<button type="button" @click="login()" class="btn btn-outline-info btn-lg btn-block">登录</button>
 				</form>
 			</div>

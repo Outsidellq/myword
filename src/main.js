@@ -3,6 +3,7 @@ import App from './App.vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import router from "./myrouter"
 import axios from 'axios'
+Vue.prototype.$EventBus = new Vue()
 /* axios.interceptors.response.use(function (response) {
 		return response.data;
 	}, function (error) {
