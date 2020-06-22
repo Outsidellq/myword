@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.TbwordDao">
+
+    <resultMap type="com.entity.Tbword" id="TbwordMap">
+        <result property="wid" column="wid" jdbcType="INTEGER"/>
+        <result property="word" column="word" jdbcType="VARCHAR"/>
+        <result property="pronounce" column="pronounce" jdbcType="VARCHAR"/>
+        <result property="des" column="des" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbwordMap">
+        select
+          wid, word, pronounce, des
+        from myword.tbword
+        where wid = #{wid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TbwordMap">
+        select
+          wid, word, pronounce, des
+        from myword.tbword
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbwordMap">
+        select
+          wid, word, pronounce, des
+        from myword.tbword
+        <where>
+            <if test="wid != null">
+                and wid = #{wid}
+            </if>
+            <if test="word != null and word != ''">
+                and word = #{word}
+            </if>
+            <if test="pronounce != null and pronounce != ''">
+                and pronounce = #{pronounce}
+            </if>
+            <if test="des != null and des != ''">
+                and des = #{des}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="wid" useGeneratedKeys="true">
+    <selectKey resultType="java.lang.Integer" keyProperty="wid" order="AFTER">
+        select last_insert_id()
+    </selectKey>
+        insert into myword.tbword(word, pronounce, des)
+        values (#{word}, #{pronounce}, #{des})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update myword.tbword
+        <set>
+            <if test="word != null and word != ''">
+                word = #{word},
+            </if>
+            <if test="pronounce != null and pronounce != ''">
+                pronounce = #{pronounce},
+            </if>
+            <if test="des != null and des != ''">
+                des = #{des},
+            </if>
+        </set>
+        where wid = #{wid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from myword.tbword where wid = #{wid}
+    </delete>
+
+</mapper>

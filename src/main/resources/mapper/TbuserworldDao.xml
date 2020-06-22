@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.TbuserworldDao">
+
+    <resultMap type="com.entity.Tbuserworld" id="TbuserworldMap">
+        <result property="tuid" column="tuid" jdbcType="INTEGER"/>
+        <result property="twid" column="twid" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="listWord" type="com.entity.Tbword">
+        <id property="wid" column="wid"></id>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbuserworldMap">
+        select
+          tuid, twid
+        from myword.tbuserworld
+        where tuid = #{tuid}
+    </select>
+
+    <select id="selWordByUid" resultMap="listWord">
+        SELECT b.*
+FROM `tbuserworld`  INNER JOIN tbuser  on tuid=uid
+ INNER JOIN  tbword b on twid=wid where tuid=#{tuid}
+
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TbuserworldMap">
+        select
+          tuid, twid
+        from myword.tbuserworld
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbuserworldMap">
+        select
+          tuid, twid
+        from myword.tbuserworld
+        <where>
+            <if test="tuid != null">
+                and tuid = #{tuid}
+            </if>
+            <if test="twid != null">
+                and twid = #{twid}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert">
+        insert into myword.tbuserworld()
+        values (#{tuid},#{twid})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update myword.tbuserworld
+        <set>
+        </set>
+        where tuid = #{tuid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from myword.tbuserworld where twid = #{twid}
+    </delete>
+
+</mapper>

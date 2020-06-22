@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.TbuserDao">
+
+    <resultMap type="com.entity.Tbuser" id="TbuserMap">
+        <result property="uid" column="uid" jdbcType="INTEGER"/>
+        <result property="uname" column="uname" jdbcType="VARCHAR"/>
+        <result property="upwd" column="upwd" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbuserMap">
+        select
+          uid, uname, upwd
+        from myword.tbuser
+        where uid = #{uid}
+    </select>
+
+    <!--查询单个-->
+    <select id="queryByNamePwd" resultMap="TbuserMap">
+        select
+          uid, uname, upwd
+        from myword.tbuser
+        where uname = #{uname} and upwd=#{upwd}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TbuserMap">
+        select
+          uid, uname, upwd
+        from myword.tbuser
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbuserMap">
+        select
+          uid, uname, upwd
+        from myword.tbuser
+        <where>
+            <if test="uid != null">
+                and uid = #{uid}
+            </if>
+            <if test="uname != null and uname != ''">
+                and uname = #{uname}
+            </if>
+            <if test="upwd != null and upwd != ''">
+                and upwd = #{upwd}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="uid" useGeneratedKeys="true">
+        insert into myword.tbuser(uname, upwd)
+        values (#{uname}, #{upwd})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update myword.tbuser
+        <set>
+            <if test="uname != null and uname != ''">
+                uname = #{uname},
+            </if>
+            <if test="upwd != null and upwd != ''">
+                upwd = #{upwd},
+            </if>
+        </set>
+        where uid = #{uid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from myword.tbuser where uid = #{uid}
+    </delete>
+
+</mapper>
