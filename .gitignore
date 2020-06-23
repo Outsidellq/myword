@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 /target/
 .idea
 myword.iml
 /logs/
 
+=======
+.DS_Store
+node_modules
+/dist
+>>>>>>> 250badf0a1181b2c4ccdda23bfb2f98564be2a86
